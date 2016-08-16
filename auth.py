@@ -14,6 +14,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy dog'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+tokenLife = 600  # In seconds
+secret = "$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6"
 
 # extensions
 db = SQLAlchemy(app)
@@ -31,7 +33,7 @@ class User(db.Model):
     def verify_password(self, password):
         return pwd_context.verify(password, self.password_hash)
 
-    def generate_auth_token(self, expiration=600):
+    def generate_auth_token(self, expiration=tokenLife):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps({'id': self.id})
 
@@ -62,13 +64,14 @@ def verify_password(username_or_token, password):
 
 @app.route('/api/users', methods=['POST'])
 def new_user():
-    print(request.values.get('username'))
+    if pwd_context.verify(request.values.get('secret'), secret) == False:
+        abort(401)    # unauthorized
     username = request.values.get('username')
     password = request.values.get('password')
     if username is None or password is None:
         abort(400)    # missing arguments
     if User.query.filter_by(username=username).first() is not None:
-        abort(400)    # existing user
+        abort(409)    # existing user
     user = User(username=username)
     user.hash_password(password)
     db.session.add(user)
@@ -88,8 +91,8 @@ def get_user(id):
 @app.route('/api/token')
 @auth.login_required
 def get_auth_token():
-    token = g.user.generate_auth_token(600)
-    return jsonify({'token': token.decode('ascii'), 'duration': 600})
+    token = g.user.generate_auth_token(tokenLife)
+    return jsonify({'token': token.decode('ascii'), 'duration': tokenLife})
 
 @app.route('/api/resource')
 @auth.login_required
