@@ -3,7 +3,10 @@
 from flask import Flask
 from flask_restful import reqparse, abort, Api, Resource
 
+# initialization
 app = Flask(__name__)
+
+# extensions
 api = Api(app)
 
 TODOS = {
