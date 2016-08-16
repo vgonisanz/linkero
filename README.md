@@ -16,6 +16,7 @@ The support for Python 2 will be deprecated in future releases and it is recomme
 * Install flask-restful Python library
 * Install flask-sqlalchemy Python library
 * Install flask-httpauth Python library
+* Install passlib Python library
 
 #### **Python 3**
 
@@ -23,6 +24,7 @@ The support for Python 2 will be deprecated in future releases and it is recomme
 * Install flask-restful Python library
 * Install flask-sqlalchemy Python library
 * Install flask-httpauth Python library
+* Install passlib Python library
 
 ### **Documentation**
 
