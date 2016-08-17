@@ -8,6 +8,8 @@ from flask_httpauth import HTTPBasicAuth
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
+from common import printWellcome, bcolors, loadConfig
+import logging
 
 
 # initialization
@@ -17,11 +19,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 tokenLife = 600  # In seconds
 secret = "$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6"
+debug = True
 
 # extensions
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
 api = Api(app)
+
+# configuration
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+config = loadConfig(logger)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -161,6 +169,8 @@ api.add_resource(TodoList, '/todos')
 api.add_resource(Todo, '/todos/<todo_id>')
 
 if __name__ == '__main__':
+    printWellcome()
     if not os.path.exists('db.sqlite'):
+        print(bcolors.WARNING+"Creating SQlite Database"+bcolors.ENDC)
         db.create_all()
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=debug)
