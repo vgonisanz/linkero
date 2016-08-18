@@ -6,5 +6,9 @@
 		"secretKey" : "the quick brown fox jumps over the lazy dog",
 		"databaseUri" : "sqlite:///db.sqlite",
 		"commitOnTeardown" : true
+	},
+	"host" : {
+		"ip" : "0.0.0.0",
+		"port" : 5000
 	}
 }
