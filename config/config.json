@@ -1,1 +1,1 @@
-{}
+{"debug":true,"tokenLife":600,"adminSecret":"$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6","app":{"secretKey":"yo mismo y mi mecanismo estamos siempre en mejora continua","databaseUri":"sqlite:///db.sqlite","commitOnTeardown":true}}
