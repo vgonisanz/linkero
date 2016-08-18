@@ -4,7 +4,7 @@ import logging
 import json
 from submodules.common import bcolors
 
-version = "0.3.1"
+version = "0.3.4"
 
 def printWellcome():
     print(bcolors.HEADER+"")
@@ -24,22 +24,21 @@ def printWellcome():
     print("-----------------------------------------------------")
     print(""+bcolors.ENDC)
 
+def loadMode():
+    with open('config/config.json') as config_file:
+        return json.load(config_file)["debug"]
 
 def loadConfig(logger):
     print(bcolors.WARNING)
 
     if logger.getEffectiveLevel() != logging.DEBUG:
         logger.info("Running in Release Mode")
-
-        with open('config/config.json') as config_file:
-            config = json.load(config_file)
-            logger.info("Loaded: config/config.json")
     else:
         logger.info("Running in Debug Mode")
 
-        with open('config/test/config.json') as config_file:
-            config = json.load(config_file)
-            logger.info("Loaded: config/test/config.json")
+    with open('config/config.json') as config_file:
+        config = json.load(config_file)
+        logger.info("Loaded: config/config.json")
 
     print(bcolors.ENDC)
     return (config)

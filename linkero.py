@@ -8,28 +8,34 @@ from flask_httpauth import HTTPBasicAuth
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
-from common import printWellcome, bcolors, loadConfig
+from common import printWellcome, bcolors, loadConfig, loadMode
 import logging
 
 
 # initialization
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy dog'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-tokenLife = 600  # In seconds
-adminSecret = "$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6"
-debug = True
+
+if loadMode() == True:  # If true debug  mode
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
+else:
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+
+config = loadConfig(logger)
+app.config['SECRET_KEY'] = config["app"]["secretKey"]
+app.config['SQLALCHEMY_DATABASE_URI'] = config["app"]["databaseUri"]
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config["app"]["commitOnTeardown"]
+tokenLife = config["tokenLife"]  # In seconds
+adminSecret = config["adminSecret"]
+debug = config["debug"]
 
 # extensions
 db = SQLAlchemy(app)
 auth = HTTPBasicAuth()
 api = Api(app)
 
-# configuration
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-config = loadConfig(logger)
 
 class User(db.Model):
     __tablename__ = 'users'
