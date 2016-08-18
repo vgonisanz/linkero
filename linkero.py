@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy dog'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 tokenLife = 600  # In seconds
-secret = "$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6"
+adminSecret = "$5$rounds=573252$kNOBWfyce5yYhjvb$PMY7kXluDJpWKXPLCmNPVBh2ARO9CoorXlXmRCcZhO6"
 debug = True
 
 # extensions
@@ -74,7 +74,7 @@ def verify_password(username_or_token, password):
 
 @app.route('/api/users', methods=['POST'])
 def new_user():
-    if pwd_context.verify(request.values.get('secret'), secret) == False:
+    if pwd_context.verify(request.values.get('secret'), adminSecret) == False:
         abort(401)    # unauthorized
     username = request.values.get('username')
     password = request.values.get('password')
