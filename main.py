@@ -1,11 +1,11 @@
-# Linkero Core
+# 1) Linkero Core
 import linkero
 
-# APIs developed to use with Linkero
+# 2) APIs developed to use with Linkero
 import testAPI
 
-# Load desired APIs
+# 3) Load desired APIs
 testAPI.loadTestAPI()
 
-# Run Linkero
+# 4) Run Linkero
 linkero.run()
