@@ -4,7 +4,7 @@ import logging
 import json
 from submodules.common import bcolors
 
-version = "0.3.4"
+version = "0.5.2"
 
 def printWellcome():
     print(bcolors.HEADER+"")
