@@ -27,7 +27,11 @@ def printWellcome():
 def loadMode():
     try:
         with open('config/config.json') as config_file:
-            return json.load(config_file)["debug"]
+            try:
+                return json.load(config_file)["debug"]
+            except KeyError:
+                print(bcolors.WARNING+"Misformed config.json!"+bcolors.ENDC)
+                exit()
     except FileNotFoundError:
         print(bcolors.WARNING+"Error loading config.json!"+bcolors.ENDC)
         exit()

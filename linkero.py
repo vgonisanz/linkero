@@ -24,12 +24,16 @@ else:
 
 
 config = loadConfig(logger)
-app.config['SECRET_KEY'] = config["app"]["secretKey"]
-app.config['SQLALCHEMY_DATABASE_URI'] = config["app"]["databaseUri"]
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config["app"]["commitOnTeardown"]
-tokenLife = config["tokenLife"]  # In seconds
-adminSecret = config["adminSecret"]
-debug = config["debug"]
+try:
+    app.config['SECRET_KEY'] = config["app"]["secretKey"]
+    app.config['SQLALCHEMY_DATABASE_URI'] = config["app"]["databaseUri"]
+    app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = config["app"]["commitOnTeardown"]
+    tokenLife = config["tokenLife"]  # In seconds
+    adminSecret = config["adminSecret"]
+    debug = config["debug"]
+except KeyError:
+    print(bcolors.WARNING+"Misformed config.json!"+bcolors.ENDC)
+    exit()
 
 # extensions
 db = SQLAlchemy(app)
