@@ -4,3 +4,6 @@
 [submodule "submodules/python-scripts"]
 	path = submodules/pythonScripts
 	url = http://ingran.es:8081/rdcelis/python-scripts.git
+[submodule "submodules/pythonScripts"]
+	path = submodules/pythonScripts
+	url = http://ingran.es:8081/rdcelis/python-scripts.git
