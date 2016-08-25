@@ -2,7 +2,7 @@
 
 import logging
 import json
-from submodules.common import bcolors
+from submodules.SimplePythonTools.common import bcolors
 
 version = "0.5.2"
 
