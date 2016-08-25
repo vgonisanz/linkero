@@ -1,11 +1,13 @@
 # 1) Linkero Core
-import linkero
+import core.linkero as linkero
 
 # 2) APIs developed to use with Linkero
-import testAPI
+import examples.testAPI
+import API.pythonScriptsAPI
 
 # 3) Load desired APIs
-testAPI.loadTestAPI()
+examples.testAPI.loadTestAPI()
+API.pythonScriptsAPI.loadPythonScriptsAPI()
 
 # 4) Run Linkero
 linkero.run()

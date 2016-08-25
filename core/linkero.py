@@ -8,7 +8,7 @@ from flask_httpauth import HTTPBasicAuth
 from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
-from common import printWellcome, bcolors, loadConfig, loadMode
+from core.common import printWellcome, bcolors, loadConfig, loadMode
 import logging
 
 
@@ -122,7 +122,10 @@ def get_resource():
 
 def run():
     printWellcome()
-    if not os.path.exists('db.sqlite'):
+    db_path = str(app.config['SQLALCHEMY_DATABASE_URI'].split('//')[1])
+    file_path = os.path.dirname(os.path.realpath(__file__))
+    if not os.path.exists(file_path+db_path):
         print(bcolors.WARNING+"Creating SQlite Database"+bcolors.ENDC)
+        print(bcolors.OKBLUE+file_path+db_path+bcolors.ENDC)
         db.create_all()
     app.run(host=config["host"]["ip"], port=config["host"]["port"], debug=debug)
