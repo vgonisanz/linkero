@@ -2,6 +2,7 @@
 
 import core.linkero as linkero
 import submodules.pythonScripts.modules.alert_viewer as av
+import sys
 
 numItems = int(linkero.config['API']['pythonScriptsAPI']['numItems'])
 
@@ -13,7 +14,10 @@ class alerts(linkero.Resource):
         numItems = av.countLines(av.openLog())
         alerts = av.searchLastEntries(av.openLog(), filters, numItems)
         for alert in alerts:
-            alert[0]=str(alert[0]).replace('\n', '')
+            if (sys.version_info > (3, 0)):
+                alert[0] = str(alert[0]).replace('\n', '')
+            else:
+                alert[0] = unicode(alert[0]).replace('\n', '')
         return alerts
 
 class alertsByUser(linkero.Resource):
@@ -24,7 +28,10 @@ class alertsByUser(linkero.Resource):
         filters.append(user)
         alerts = av.searchLastEntries(av.openLog(), filters, numItems)
         for alert in alerts:
-            alert[0] = str(alert[0]).replace('\n', '')
+            if (sys.version_info > (3, 0)):
+                alert[0] = str(alert[0]).replace('\n', '')
+            else:
+                alert[0] = unicode(alert[0]).replace('\n', '')
         return alerts
 
 class alertsByUserAndMonth(linkero.Resource):
@@ -36,7 +43,10 @@ class alertsByUserAndMonth(linkero.Resource):
         filters.append(month)
         alerts = av.searchLastEntries(av.openLog(), filters, numItems)
         for alert in alerts:
-            alert[0] = str(alert[0]).replace('\n', '')
+            if (sys.version_info > (3, 0)):
+                alert[0] = str(alert[0]).replace('\n', '')
+            else:
+                alert[0] = unicode(alert[0]).replace('\n', '')
         return alerts
 
 ##
