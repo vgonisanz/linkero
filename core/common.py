@@ -32,7 +32,7 @@ def loadMode():
             except KeyError:
                 print(bcolors.WARNING+"Misformed config.json!"+bcolors.ENDC)
                 exit()
-    except FileNotFoundError:
+    except IOError:
         print(bcolors.WARNING+"Error loading config.json!"+bcolors.ENDC)
         exit()
 
@@ -48,7 +48,7 @@ def loadConfig(logger):
         with open('config/config.json') as config_file:
             config = json.load(config_file)
             logger.info("Loaded: config/config.json")
-    except FileNotFoundError:
+    except IOError:
         print("Error loading config.json!")
         exit()
 
