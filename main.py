@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # 1) Linkero Core
 import core.linkero as linkero
 
