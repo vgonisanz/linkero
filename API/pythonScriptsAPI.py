@@ -3,6 +3,8 @@
 import core.linkero as linkero
 import submodules.pythonScripts.modules.alert_viewer as av
 
+numItems = int(linkero.config['API']['pythonScriptsAPI']['numItems'])
+
 class alerts(linkero.Resource):
     @linkero.auth.login_required
     def get(self):
@@ -20,7 +22,6 @@ class alertsByUser(linkero.Resource):
         filters = []
         filters.append("[info]")
         filters.append(user)
-        numItems = 500
         alerts = av.searchLastEntries(av.openLog(), filters, numItems)
         for alert in alerts:
             alert[0] = str(alert[0]).replace('\n', '')
@@ -33,7 +34,6 @@ class alertsByUserAndMonth(linkero.Resource):
         filters.append("[info]")
         filters.append(user)
         filters.append(month)
-        numItems = 500
         alerts = av.searchLastEntries(av.openLog(), filters, numItems)
         for alert in alerts:
             alert[0] = str(alert[0]).replace('\n', '')
