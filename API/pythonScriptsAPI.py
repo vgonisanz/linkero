@@ -56,3 +56,4 @@ def loadPythonScriptsAPI():
     linkero.api.add_resource(alerts, '/alerts')
     linkero.api.add_resource(alertsByUser, '/alerts/<user>')
     linkero.api.add_resource(alertsByUserAndMonth, '/alerts/<user>&<month>')
+    linkero.logger.info('Loaded pythonScriptsAPI')
