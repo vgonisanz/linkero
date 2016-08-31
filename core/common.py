@@ -2,9 +2,9 @@
 
 import logging
 import json
-from submodules.common import bcolors
+from submodules.SimplePythonTools.common import bcolors
 
-version = "0.5.2"
+version = "0.5.8"
 
 def printWellcome():
     print(bcolors.HEADER+"")
@@ -25,8 +25,16 @@ def printWellcome():
     print(""+bcolors.ENDC)
 
 def loadMode():
-    with open('config/config.json') as config_file:
-        return json.load(config_file)["debug"]
+    try:
+        with open('config/config.json') as config_file:
+            try:
+                return json.load(config_file)["debug"]
+            except KeyError:
+                print(bcolors.WARNING+"Misformed config.json!"+bcolors.ENDC)
+                exit()
+    except IOError:
+        print(bcolors.WARNING+"Error loading config.json!"+bcolors.ENDC)
+        exit()
 
 def loadConfig(logger):
     print(bcolors.WARNING)
@@ -36,9 +44,13 @@ def loadConfig(logger):
     else:
         logger.info("Running in Debug Mode")
 
-    with open('config/config.json') as config_file:
-        config = json.load(config_file)
-        logger.info("Loaded: config/config.json")
+    try:
+        with open('config/config.json') as config_file:
+            config = json.load(config_file)
+            logger.info("Loaded: config/config.json")
+    except IOError:
+        print("Error loading config.json!")
+        exit()
 
     print(bcolors.ENDC)
     return (config)

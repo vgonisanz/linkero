@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import linkero
+import core.linkero as linkero
 
 # TODOS Data
 TODOS = {

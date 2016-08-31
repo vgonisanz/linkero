@@ -1,3 +1,6 @@
-[submodule "submodules"]
-	path = submodules
+[submodule "submodules/SimplePythonTools"]
+	path = submodules/SimplePythonTools
 	url = https://github.com/RDCH106/SimplePythonTools.git
+[submodule "submodules/pythonScripts"]
+	path = submodules/pythonScripts
+	url = http://ingran.es:8081/rdcelis/python-scripts.git

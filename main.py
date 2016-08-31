@@ -1,11 +1,15 @@
-# Linkero Core
-import linkero
+# -*- coding: utf-8 -*-
 
-# APIs developed to use with Linkero
-import testAPI
+# 1) Linkero Core
+import core.linkero as linkero
 
-# Load desired APIs
-testAPI.loadTestAPI()
+# 2) APIs developed to use with Linkero
+import examples.testAPI
+import API.pythonScriptsAPI
 
-# Run Linkero
+# 3) Load desired APIs
+examples.testAPI.loadTestAPI()
+API.pythonScriptsAPI.loadPythonScriptsAPI()
+
+# 4) Run Linkero
 linkero.run()
